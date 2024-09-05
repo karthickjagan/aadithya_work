@@ -120,6 +120,7 @@ button:hover {
 
 #happyDragon {
     animation: bounce 2s infinite;
+    background-image: url('https://cdn.pixabay.com/photo/2015/11/15/17/07/dragon-1081198_1280.png');
 }
 
 /* Neutral Dragon Animation */
@@ -134,6 +135,7 @@ button:hover {
 
 #neutralDragon {
     animation: nod 2s infinite;
+    background-image: url('https://cdn.pixabay.com/photo/2016/02/19/10/16/dragon-1215079_1280.png');
 }
 
 /* Sad Dragon Animation */
@@ -147,6 +149,7 @@ button:hover {
 
 #sadDragon {
     animation: shake 0.5s infinite;
+    background-image: url('https://cdn.pixabay.com/photo/2015/11/15/17/10/dragon-1081202_1280.png');
 }
 
 /* Floating stars for magical effect */
