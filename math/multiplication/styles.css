@@ -1,7 +1,7 @@
 /* General Styles */
 body {
     font-family: 'Comic Sans MS', sans-serif;
-    color: #000; /* Changed to black for better readability */
+    color: #000; /* Changed to black for readability */
     text-align: center;
     margin: 0;
     padding: 0;
@@ -31,7 +31,7 @@ body::before {
 }
 
 h1 {
-    color: #D32F2F; /* Changed to a strong red for better contrast */
+    color: #D32F2F; /* Strong red for headings */
     font-size: 2.5em;
     text-shadow: 2px 2px 5px #000;
 }
@@ -61,7 +61,7 @@ h1 {
 label {
     margin-right: 10px;
     font-size: 18px;
-    color: #D32F2F; /* Changed labels to red for contrast */
+    color: #000; /* Set to black for better readability of the numbers */
 }
 
 input[type="number"] {
@@ -69,6 +69,7 @@ input[type="number"] {
     padding: 5px;
     font-size: 18px;
     border: 2px solid #D32F2F; /* Red magical border */
+    color: #000; /* Black text inside input fields */
 }
 
 button {
@@ -90,7 +91,7 @@ button:hover {
 #result {
     margin-top: 20px;
     font-size: 20px;
-    color: #D32F2F; /* Strong red color for feedback text */
+    color: #D32F2F; /* Red color for feedback */
     text-shadow: 1px 1px 4px #000;
 }
 
