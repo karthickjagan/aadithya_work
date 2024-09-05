@@ -1,17 +1,39 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f8ff;
+    font-family: 'Comic Sans MS', sans-serif;
+    color: #333;
     text-align: center;
     margin: 0;
     padding: 0;
+    background: url('https://cdn.pixabay.com/photo/2015/12/01/20/28/forest-1072828_1280.jpg') no-repeat center center fixed; /* Replace with actual magical image */
+    background-size: cover;
+    position: relative;
+}
+
+/* Magical overlay effect with soft glow */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Dark semi-transparent layer to enhance the text visibility */
+    z-index: -1; /* Keep it behind all content */
 }
 
 .container {
     margin-top: 50px;
+    background: rgba(255, 255, 255, 0.8); /* Light translucent background for readability */
+    padding: 20px;
+    border-radius: 20px;
+    display: inline-block;
 }
 
 h1 {
-    color: #333;
+    color: #FFD700;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 5px #000;
 }
 
 .buttons a {
@@ -21,12 +43,13 @@ h1 {
     text-decoration: none;
     background-color: #4CAF50;
     color: white;
-    border-radius: 5px;
-    font-size: 18px;
+    border-radius: 10px;
+    font-size: 20px;
+    transition: background-color 0.3s;
 }
 
 .buttons a:hover {
-    background-color: #45a049;
+    background-color: #388E3C;
 }
 
 #questions {
@@ -37,40 +60,114 @@ h1 {
 
 label {
     margin-right: 10px;
+    font-size: 18px;
+    color: #FFD700; /* Golden color for magical effect */
 }
 
 input[type="number"] {
-    width: 50px;
+    width: 60px;
+    padding: 5px;
+    font-size: 18px;
+    border: 2px solid #FFD700; /* Add magical gold border */
 }
 
 button {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #008CBA;
+    background-color: #00BCD4;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #007bb5;
+    background-color: #008CBA;
 }
 
 #result {
     margin-top: 20px;
-    font-size: 18px;
-    color: #333;
+    font-size: 20px;
+    color: #FFD700;
+    text-shadow: 1px 1px 4px #000;
 }
 
-a {
-    display: inline-block;
+/* Dragon Character Animations */
+.character {
+    display: none;
     margin-top: 20px;
-    text-decoration: none;
-    color: #008CBA;
-    font-size: 18px;
 }
 
-a:hover {
-    text-decoration: underline;
+#happyDragon, #neutralDragon, #sadDragon {
+    width: 200px;
+    margin: 20px auto;
 }
+
+/* Happy Dragon Animation */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+#happyDragon {
+    animation: bounce 2s infinite;
+}
+
+/* Neutral Dragon Animation */
+@keyframes nod {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+#neutralDragon {
+    animation: nod 2s infinite;
+}
+
+/* Sad Dragon Animation */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+}
+
+#sadDragon {
+    animation: shake 0.5s infinite;
+}
+
+/* Magical Floating Stars */
+@keyframes float {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-100px);
+    }
+}
+
+.star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    animation: float 10s linear infinite;
+    z-index: 1;
+}
+
+.star:nth-child(1) { width: 5px; height: 5px; top: 10%; left: 15%; animation-duration: 7s; }
+.star:nth-child(2) { width: 3px; height: 3px; top: 40%; left: 45%; animation-duration: 8s; }
+.star:nth-child(3) { width: 4px; height: 4px; top: 20%; left: 75%; animation-duration: 6s; }

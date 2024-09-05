@@ -7,11 +7,27 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="star"></div> <!-- Floating stars -->
+    <div class="star"></div>
+    <div class="star"></div>
+
     <div class="container">
         <h1 id="table-title"></h1>
         <div id="questions"></div>
         <button onclick="checkAnswers()">Check Answers</button>
         <div id="result"></div>
+
+        <!-- Dragon Display Area -->
+        <div class="character" id="happyDragon">
+            <img src="https://example.com/happy-dragon.png" alt="Happy Dragon">
+        </div>
+        <div class="character" id="neutralDragon">
+            <img src="https://example.com/neutral-dragon.png" alt="Neutral Dragon">
+        </div>
+        <div class="character" id="sadDragon">
+            <img src="https://example.com/sad-dragon.png" alt="Sad Dragon">
+        </div>
+
         <a href="index.html">Back to Home</a>
     </div>
 
@@ -51,7 +67,23 @@
                     correct++;
                 }
             });
+
             document.getElementById('result').innerText = `You got ${correct} out of 16 correct!`;
+
+            // Show dragon character based on the score
+            if (correct === 16) {
+                document.getElementById('happyDragon').style.display = 'block';
+                document.getElementById('neutralDragon').style.display = 'none';
+                document.getElementById('sadDragon').style.display = 'none';
+            } else if (correct >= 14) {
+                document.getElementById('neutralDragon').style.display = 'block';
+                document.getElementById('happyDragon').style.display = 'none';
+                document.getElementById('sadDragon').style.display = 'none';
+            } else {
+                document.getElementById('sadDragon').style.display = 'block';
+                document.getElementById('happyDragon').style.display = 'none';
+                document.getElementById('neutralDragon').style.display = 'none';
+            }
         }
     </script>
 </body>
