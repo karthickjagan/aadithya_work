@@ -5,7 +5,7 @@ body {
     text-align: center;
     margin: 0;
     padding: 0;
-    background: url('https://pixabay.com/get/g682d6e11c41c4b4a62e0309c52727bb182f0ffb143b4a144b0006cf41c9a34d2ad295ea81fbd5f177ab82f582c4f870f_1920.jpg') no-repeat center center fixed; /* Magical background */
+    background: url('https://cdn.pixabay.com/photo/2015/12/01/20/28/forest-1072828_1280.jpg') no-repeat center center fixed; /* Magical background */
     background-size: cover;
     position: relative;
 }
