@@ -121,6 +121,9 @@ button:hover {
 #happyDragon {
     animation: bounce 2s infinite;
     background-image: url('https://img.pixers.pics/pho_wat(s3:700/FO/62/94/93/07/700_FO62949307_e76fcffc97d55915f32d41819ce89292.jpg,439,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,219,650,jpg)/stickers-happy-dragon-cartoon.jpg.jpg');
+    background-size: cover; /* or use 'contain' to fit the whole image inside */
+    background-position: center; /* center the image within the box */
+    background-repeat: no-repeat; /* prevent repeating the image */
 }
 
 /* Neutral Dragon Animation */
@@ -136,6 +139,9 @@ button:hover {
 #neutralDragon {
     animation: nod 2s infinite;
     background-image: url('https://thumbs.dreamstime.com/b/kind-dragon-looks-sad-full-body-image-cartoon-style-ai-kind-dragon-looks-sad-full-body-image-cartoon-style-313756632.jpg');
+    background-size: cover; /* or use 'contain' to fit the whole image inside */
+    background-position: center; /* center the image within the box */
+    background-repeat: no-repeat; /* prevent repeating the image */
 }
 
 /* Sad Dragon Animation */
@@ -150,6 +156,9 @@ button:hover {
 #sadDragon {
     animation: shake 0.5s infinite;
     background-image: url('https://i.pinimg.com/originals/f2/61/5a/f2615a900cf90983bf886855f98d2c55.jpg');
+    background-size: cover; /* or use 'contain' to fit the whole image inside */
+    background-position: center; /* center the image within the box */
+    background-repeat: no-repeat; /* prevent repeating the image */
 }
 
 /* Floating stars for magical effect */
