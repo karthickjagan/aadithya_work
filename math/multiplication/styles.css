@@ -126,6 +126,8 @@ button:hover {
     background-repeat: no-repeat; /* prevent repeating the image */
     text-indent: -9999px; /* Moves the text out of view */
     display: none;
+    width: 300px; /* Adjust width as needed */
+    height: 300px; /* Adjust height as needed */
 }
 
 /* Neutral Dragon Animation */
@@ -146,6 +148,8 @@ button:hover {
     background-repeat: no-repeat; /* prevent repeating the image */
     text-indent: -9999px; /* Moves the text out of view */
     display: none;
+    width: 300px; /* Adjust width as needed */
+    height: 300px; /* Adjust height as needed */
 }
 
 /* Sad Dragon Animation */
@@ -165,6 +169,8 @@ button:hover {
     background-repeat: no-repeat; /* prevent repeating the image */
     text-indent: -9999px; /* Moves the text out of view */
     display: none;
+    width: 300px; /* Adjust width as needed */
+    height: 300px; /* Adjust height as needed */
 }
 
 /* Floating stars for magical effect */
