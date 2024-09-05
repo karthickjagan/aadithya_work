@@ -125,6 +125,7 @@ button:hover {
     background-position: center; /* center the image within the box */
     background-repeat: no-repeat; /* prevent repeating the image */
     text-indent: -9999px; /* Moves the text out of view */
+    display: none;
 }
 
 /* Neutral Dragon Animation */
@@ -144,6 +145,7 @@ button:hover {
     background-position: center; /* center the image within the box */
     background-repeat: no-repeat; /* prevent repeating the image */
     text-indent: -9999px; /* Moves the text out of view */
+    display: none;
 }
 
 /* Sad Dragon Animation */
@@ -162,6 +164,7 @@ button:hover {
     background-position: center; /* center the image within the box */
     background-repeat: no-repeat; /* prevent repeating the image */
     text-indent: -9999px; /* Moves the text out of view */
+    display: none;
 }
 
 /* Floating stars for magical effect */
