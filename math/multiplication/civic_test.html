@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civics Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        #question-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="question-container">
+        <h2 id="question"></h2>
+        <div id="options"></div>
+        <button id="submit">Submit</button>
+        <button id="skip">Skip</button>
+        <p id="hint"></p>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the supreme law of the land?",
+                options: ["The Constitution", "The President", "The Congress"],
+                answer: 0,
+                hint: "It's the founding document."
+            },
+            {
+                question: "What does the Constitution do?",
+                options: ["Sets up the government", "Declares independence", "Gives power to the states"],
+                answer: 0,
+                hint: "It defines the structure of the government."
+            },
+            // Add more questions here...
+        ];
+
+        let currentQuestionIndex = 0;
+        const questionElement = document.getElementById("question");
+        const optionsElement = document.getElementById("options");
+        const hintElement = document.getElementById("hint");
+        const submitButton = document.getElementById("submit");
+        const skipButton = document.getElementById("skip");
+
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            questionElement.textContent = question.question;
+            optionsElement.innerHTML = "";
+            hintElement.textContent = "";
+
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement("button");
+                optionElement.textContent = option;
+                optionElement.addEventListener("click", () => selectOption(index));
+                optionsElement.appendChild(optionElement);
+            });
+        }
+
+        function selectOption(selectedIndex) {
+            const question = questions[currentQuestionIndex];
+            if (selectedIndex === question.answer) {
+                alert("Correct!");
+                nextQuestion();
+            } else {
+                hintElement.textContent = "Hint: " + question.hint;
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % questions.length;
+            loadQuestion();
+        }
+
+        submitButton.addEventListener("click", nextQuestion);
+        skipButton.addEventListener("click", nextQuestion);
+
+        loadQuestion();
+    </script>
+
+</body>
+</html>
