@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Number Practice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://cdn.pixabay.com/photo/2015/12/01/20/28/forest-1072828_1280.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+    button {
+      font-size: 18px;
+      font-weight: bold;
+      padding: 15px 30px;
+      margin: 20px;
+      cursor: pointer;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: rgba(255, 255, 255, 0.7);
+      color: black;
+    }
+    .numbers {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      white-space: pre-line;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      display: inline-block;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Number Practice</h1>
+  <p>Click the button below to generate random numbers!</p>
+  <button onclick="generateNumbers()">Generate Numbers</button>
+  <div class="numbers" id="numbers"></div>
+
+  <script>
+    function generateNumbers() {
+      const numbers = [];
+      while (numbers.length < 30) {
+        let num = Math.floor(Math.random() * (9999999999999 - 1000000 + 1)) + 1000000;
+        if (!num.toString().includes('0')) {
+          numbers.push(num);
+        }
+      }
+      shuffleArray(numbers);
+      document.getElementById("numbers").textContent = numbers.join('\n');
+    }
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+  </script>
+</body>
+</html>
