@@ -10,7 +10,7 @@
       text-align: center;
       margin: 0;
       padding: 0;
-      background-image: url('https://cdn.pixabay.com/photo/2015/12/01/20/28/forest-1072828_1280.jpg');
+      background-image: url('https://i.gifer.com/7CJk.gif');
       background-size: cover;
       background-position: center;
       color: white;
@@ -58,7 +58,8 @@
         }
       }
       shuffleArray(numbers);
-      document.getElementById("numbers").textContent = numbers.join('\n');
+      const formattedNumbers = numbers.map((num, index) => `${index + 1}. ${num}`).join('\n\n');
+      document.getElementById("numbers").textContent = formattedNumbers;
     }
 
     function shuffleArray(array) {
