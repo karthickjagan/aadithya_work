@@ -1,137 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Adventure Forge</title>
-  <style>
-    body {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f0f0f0;
-    }
-    canvas {
-      border: 1px solid black;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure Forge</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+            background: #87CEEB; /* Sky Blue */
+        }
+    </style>
 </head>
 <body>
-  <script>
-    // Adventure Forge: A Simple Platformer Game using JavaScript and HTML Canvas
+    <canvas id="gameCanvas"></canvas>
 
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = 800;
-    canvas.height = 400;
-    document.body.appendChild(canvas);
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
 
-    // Game variables
-    const player = {
-      x: 50,
-      y: 300,
-      width: 30,
-      height: 30,
-      color: 'blue',
-      speed: 5,
-      dx: 0,
-      dy: 0,
-      gravity: 0.8,
-      jumpPower: -12,
-      onGround: false
-    };
+        // Set canvas dimensions
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-    const platforms = [
-      { x: 0, y: 350, width: 200, height: 20 },
-      { x: 250, y: 300, width: 150, height: 20 },
-      { x: 450, y: 250, width: 150, height: 20 },
-      { x: 650, y: 200, width: 150, height: 20 }
-    ];
+        // Player properties
+        const player = {
+            x: 50,
+            y: canvas.height - 150,
+            width: 50,
+            height: 50,
+            color: 'red',
+            dx: 0,
+            dy: 0,
+            gravity: 0.5,
+            jumpStrength: -10,
+            grounded: false
+        };
 
-    let keys = {}; // Track keyboard input
+        // Platform properties
+        const platforms = [
+            { x: 0, y: canvas.height - 50, width: canvas.width, height: 50, color: 'green' },
+            { x: 200, y: canvas.height - 200, width: 150, height: 20, color: 'brown' },
+            { x: 400, y: canvas.height - 300, width: 150, height: 20, color: 'brown' },
+        ];
 
-    // Input handlers
-    document.addEventListener('keydown', (e) => {
-      keys[e.key] = true;
-    });
+        // Key states
+        const keys = {
+            ArrowLeft: false,
+            ArrowRight: false,
+            Space: false
+        };
 
-    document.addEventListener('keyup', (e) => {
-      keys[e.key] = false;
-    });
+        // Event listeners
+        window.addEventListener('keydown', (e) => {
+            if (e.code in keys) keys[e.code] = true;
+        });
 
-    // Game functions
-    function drawPlayer() {
-      ctx.fillStyle = player.color;
-      ctx.fillRect(player.x, player.y, player.width, player.height);
-    }
+        window.addEventListener('keyup', (e) => {
+            if (e.code in keys) keys[e.code] = false;
+        });
 
-    function drawPlatforms() {
-      ctx.fillStyle = 'green';
-      platforms.forEach((platform) => {
-        ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
-      });
-    }
+        function update() {
+            // Horizontal movement
+            if (keys.ArrowLeft) player.dx = -5;
+            else if (keys.ArrowRight) player.dx = 5;
+            else player.dx = 0;
 
-    function updatePlayer() {
-      // Horizontal movement
-      if (keys['ArrowRight']) player.dx = player.speed;
-      else if (keys['ArrowLeft']) player.dx = -player.speed;
-      else player.dx = 0;
+            // Jumping
+            if (keys.Space && player.grounded) {
+                player.dy = player.jumpStrength;
+                player.grounded = false;
+            }
 
-      // Jumping
-      if (keys['ArrowUp'] && player.onGround) {
-        player.dy = player.jumpPower;
-        player.onGround = false;
-      }
+            // Apply gravity
+            player.dy += player.gravity;
 
-      // Apply gravity
-      player.dy += player.gravity;
+            // Update position
+            player.x += player.dx;
+            player.y += player.dy;
 
-      // Update position
-      player.x += player.dx;
-      player.y += player.dy;
+            // Collision detection with platforms
+            player.grounded = false;
+            for (const platform of platforms) {
+                if (
+                    player.x < platform.x + platform.width &&
+                    player.x + player.width > platform.x &&
+                    player.y < platform.y + platform.height &&
+                    player.y + player.height > platform.y
+                ) {
+                    // Collision detected, reset position
+                    if (player.dy > 0) {
+                        player.y = platform.y - player.height;
+                        player.dy = 0;
+                        player.grounded = true;
+                    }
+                }
+            }
 
-      // Prevent falling through the floor
-      if (player.y + player.height > canvas.height) {
-        player.y = canvas.height - player.height;
-        player.dy = 0;
-        player.onGround = true;
-      }
-
-      // Check collisions with platforms
-      platforms.forEach((platform) => {
-        if (
-          player.x < platform.x + platform.width &&
-          player.x + player.width > platform.x &&
-          player.y + player.height > platform.y &&
-          player.y + player.height < platform.y + platform.height
-        ) {
-          player.y = platform.y - player.height;
-          player.dy = 0;
-          player.onGround = true;
+            // Prevent falling off the screen
+            if (player.y + player.height > canvas.height) {
+                player.y = canvas.height - player.height;
+                player.dy = 0;
+                player.grounded = true;
+            }
         }
-      });
-    }
 
-    function clearCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
+        function draw() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    function gameLoop() {
-      clearCanvas();
-      drawPlatforms();
-      drawPlayer();
-      updatePlayer();
-      requestAnimationFrame(gameLoop);
-    }
+            // Draw player
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
 
-    // Start the game
-    requestAnimationFrame(gameLoop);
-  </script>
+            // Draw platforms
+            for (const platform of platforms) {
+                ctx.fillStyle = platform.color;
+                ctx.fillRect(platform.x, platform.y, platform.width, platform.height);
+            }
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
 </body>
 </html>
-
-	
-
