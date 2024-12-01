@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Random Questions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://darvideo.tv/wp-content/uploads/2019/08/Visual-Effects-or-VFX.jpg'); /* Replace with your background image link */
+            background-size: cover;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 20%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            display: inline-block;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Random Math Question</h1>
+        <p id="question">Loading...</p>
+        <input type="number" id="answer" placeholder="Your answer here">
+        <br>
+        <button onclick="validateAnswer()">Check Answer</button>
+        <button onclick="generateQuestion()">Next Question</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        let currentQuestion = {};
+
+        function generateQuestion() {
+            const maxNumber = 10_000_000_000_000; // 10 trillion
+            const divisorOptions = [10, 100, 1000, 1_000_000, 1_000_000_000];
+            const randomNumber = Math.floor(Math.random() * maxNumber) + 1;
+            const randomDivisor = divisorOptions[Math.floor(Math.random() * divisorOptions.length)];
+
+            currentQuestion = {
+                number: randomNumber,
+                divisor: randomDivisor,
+                answer: Math.floor(randomNumber / randomDivisor)
+            };
+
+            document.getElementById("question").textContent = `How many ${randomDivisor}s are in ${randomNumber}?`;
+            document.getElementById("result").textContent = "";
+            document.getElementById("answer").value = "";
+        }
+
+        function validateAnswer() {
+            const userAnswer = parseInt(document.getElementById("answer").value);
+            const resultElement = document.getElementById("result");
+
+            if (userAnswer === currentQuestion.answer) {
+                resultElement.textContent = "Correct!";
+                resultElement.style.color = "lightgreen";
+            } else {
+                resultElement.textContent = `Wrong. The correct answer is ${currentQuestion.answer}.`;
+                resultElement.style.color = "red";
+            }
+        }
+
+        // Initialize the first question
+        generateQuestion();
+    </script>
+</body>
+</html>
