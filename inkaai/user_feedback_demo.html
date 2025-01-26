@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player with Scroll and Language Selector</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-play-area {
+            flex-grow: 1;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-area {
+            flex-grow: 0;
+            flex-shrink: 0;
+            height: 120px;
+            overflow-x: auto;
+            white-space: nowrap;
+            background-color: #f1f1f1;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .scroll-item {
+            margin-right: 20px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .scroll-item img {
+            width: 160px;
+            height: 90px;
+            border-radius: 5px;
+        }
+
+        .controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        /* Language Select at the bottom center */
+        .language-select {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .language-select select {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .video-play-area iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Play Area -->
+    <div class="video-play-area">
+        <iframe id="mainVideo" width="640" height="360" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        <!-- Language Selection Dropdown (Positioned at bottom center) -->
+        <div class="language-select">
+            <label for="languageSelect" style="color: white; margin-right: 10px;">Select Language:</label>
+            <select id="languageSelect" onchange="changeLanguage()">
+                <option value="english">English</option>
+                <option value="tamil">Tamil</option>
+                <option value="telugu">Telugu</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Scroll Area -->
+    <div class="scroll-area">
+        <div class="scroll-item" onclick="changeVideo(0)">
+            <img src="https://img.youtube.com/vi/wDVjJSlDAM0/0.jpg" alt="Video Thumbnail">
+        </div>
+        <div class="scroll-item" onclick="changeVideo(1)">
+            <img src="https://img.youtube.com/vi/TEFXtvCcPBw/0.jpg" alt="Video Thumbnail">
+        </div>
+        <div class="scroll-item" onclick="changeVideo(2)">
+            <img src="https://img.youtube.com/vi/YU6sRWdzEMc/0.jpg" alt="Video Thumbnail">
+        </div>
+        <div class="scroll-item" onclick="changeVideo(3)">
+            <img src="https://img.youtube.com/vi/K1NHHRR80Vs/0.jpg" alt="Video Thumbnail">
+        </div>
+        <div class="scroll-item" onclick="changeVideo(4)">
+            <img src="https://img.youtube.com/vi/tCcNzTDe6VA/0.jpg" alt="Video Thumbnail">
+        </div>
+    </div>
+
+    <script>
+        // Video links configuration
+        const mainVideos = [
+            'https://www.youtube.com/embed/wDVjJSlDAM0',
+            'https://www.youtube.com/embed/TEFXtvCcPBw',
+            'https://www.youtube.com/embed/YU6sRWdzEMc',
+            'https://www.youtube.com/embed/K1NHHRR80Vs',
+            'https://www.youtube.com/embed/tCcNzTDe6VA'
+        ];
+
+        const tamilVideos = [
+            'https://www.youtube.com/embed/wDVjJSlDAM0',
+            'https://www.youtube.com/embed/TEFXtvCcPBw',
+            'https://www.youtube.com/embed/YU6sRWdzEMc',
+            'https://www.youtube.com/embed/K1NHHRR80Vs',
+            'https://www.youtube.com/embed/tCcNzTDe6VA'
+        ];
+
+        const teluguVideos = [
+            'https://www.youtube.com/embed/wDVjJSlDAM0',
+            'https://www.youtube.com/embed/TEFXtvCcPBw',
+            'https://www.youtube.com/embed/YU6sRWdzEMc',
+            'https://www.youtube.com/embed/K1NHHRR80Vs',
+            'https://www.youtube.com/embed/tCcNzTDe6VA'
+        ];
+
+        // Default language: English
+        let currentLanguage = 'english';
+        let currentIndex = 0; // Start with the first video in the list
+        let currentSeekTime = 0;
+
+        // Function to change video based on the index of the clicked thumbnail
+        function changeVideo(index) {
+            let videoUrl;
+            currentIndex = index;
+            if (currentLanguage === 'english') {
+                videoUrl = mainVideos[index];
+            } else if (currentLanguage === 'tamil') {
+                videoUrl = tamilVideos[index];
+            } else if (currentLanguage === 'telugu') {
+                videoUrl = teluguVideos[index];
+            }
+
+            // Set the new video URL in the main video player
+            document.getElementById('mainVideo').src = videoUrl + '?autoplay=1';
+        }
+
+        // Function to change the video language (English, Tamil, or Telugu)
+        function changeLanguage() {
+            const languageSelect = document.getElementById('languageSelect');
+            alert("Language change : " + currentLanguage + " index = " + currentIndex);
+            currentLanguage = languageSelect.value;
+            alert("Language change : " + currentLanguage + " index = " + currentIndex);
+
+            const videoElement = document.getElementById('mainVideo');
+            // This might not work because of iframe, but you can track 
+            const currentTime = videoElement.currentTime; 
+
+            if (currentLanguage === 'english') {
+                document.getElementById('mainVideo').src = mainVideos[currentVideoIndex] + '?autoplay=1&start=' + currentTime;
+            } else if (currentLanguage === 'tamil') {
+                document.getElementById('mainVideo').src = tamilVideos[currentVideoIndex] + '?autoplay=1&start=0'
+            } else if (currentLanguage === 'telugu') {
+                document.getElementById('mainVideo').src = teluguVideos[currentVideoIndex] + '?autoplay=1&start=' + currentTime;
+            }
+        }
+
+            // Listen for the video ending (to store the last played time)
+        function onVideoEnd() {
+            const iframe = document.getElementById('mainVideo');
+            const videoUrl = iframe.src;
+            const videoID = videoUrl.split('/')[4].split('?')[0]; // Get the video ID from the URL
+
+            // You can implement the logic to track the last played position
+            const videoElement = document.getElementById('mainVideo');
+            const currentTime = videoElement.currentTime; // This might not work because of iframe, but you can track externally.
+            currentSeekTime = currentTime; // Update the current time
+        }
+    </script>
+</body>
+</html>
