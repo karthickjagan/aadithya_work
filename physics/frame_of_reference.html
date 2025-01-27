@@ -87,11 +87,36 @@
     </style>
     <script>
         let questions = [
-            { question: "A train is moving at {train} km/h. A person inside throws a ball forward at {ball} km/h relative to the train. What is the ball's velocity relative to the ground?", train: 60, ball: 20 },
-            { question: "A boat is crossing a river flowing at {river} km/h. The boat's speed relative to the water is {boat} km/h. What is the boat's velocity relative to the shore?", river: 10, boat: 15 },
-            { question: "Two cars are moving in opposite directions. One car is moving at {car1} km/h, and the other at {car2} km/h. What is their relative velocity?", car1: 80, car2: 50 },
-            { question: "A cyclist is traveling at {cyclist} km/h. A bus overtakes the cyclist at {bus} km/h. What is the bus's velocity relative to the cyclist?", cyclist: 25, bus: 40 },
-            { question: "An airplane flies at {airplane} km/h with a wind blowing at {wind} km/h from the west. What is the airplane's ground velocity?", airplane: 500, wind: 100 }
+            { 
+                question: "A train is moving at {train} km/h. A person inside throws a ball forward at {ball} km/h relative to the train. What is the ball's velocity relative to the ground?", 
+                train: 60, 
+                ball: 20, 
+                answer: (data) => data.train + data.ball 
+            },
+            { 
+                question: "A boat is crossing a river flowing at {river} km/h. The boat's speed relative to the water is {boat} km/h. What is the boat's velocity relative to the shore?", 
+                river: 10, 
+                boat: 15, 
+                answer: (data) => Math.sqrt(data.river ** 2 + data.boat ** 2).toFixed(2)
+            },
+            { 
+                question: "Two cars are moving in opposite directions. One car is moving at {car1} km/h, and the other at {car2} km/h. What is their relative velocity?", 
+                car1: 80, 
+                car2: 50, 
+                answer: (data) => data.car1 + data.car2 
+            },
+            { 
+                question: "A cyclist is traveling at {cyclist} km/h. A bus overtakes the cyclist at {bus} km/h. What is the bus's velocity relative to the cyclist?", 
+                cyclist: 25, 
+                bus: 40, 
+                answer: (data) => data.bus - data.cyclist 
+            },
+            { 
+                question: "An airplane flies at {airplane} km/h with a wind blowing at {wind} km/h from the west. What is the airplane's ground velocity?", 
+                airplane: 500, 
+                wind: 100, 
+                answer: (data) => data.airplane + data.wind 
+            }
         ];
 
         function randomizeVelocities() {
@@ -138,12 +163,19 @@
         function validateAnswer() {
             const answerInput = document.getElementById("answer").value.trim();
             const resultElement = document.getElementById("result");
+            const current = questions[currentQuestionIndex];
+            const correctAnswer = current.answer(current);
+
             if (answerInput === "") {
                 resultElement.textContent = "Please enter an answer before validating.";
                 resultElement.style.color = "red";
-            } else {
-                resultElement.textContent = "Answer recorded! Try the next question.";
+            } else if (parseFloat(answerInput).toFixed(2) === parseFloat(correctAnswer).toFixed(2)) {
+                resultElement.textContent = "Correct! Well done.";
                 resultElement.style.color = "green";
+                nextQuestion();
+            } else {
+                resultElement.textContent = `Incorrect. The correct answer was ${correctAnswer}. Try the next question.`;
+                resultElement.style.color = "red";
                 nextQuestion();
             }
         }
