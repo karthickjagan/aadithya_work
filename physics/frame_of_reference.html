@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame of Reference Homework</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question p {
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .object {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+        }
+        .train {
+            background-color: #007BFF;
+            margin-right: 20px;
+        }
+        .ball {
+            background-color: #FFC107;
+            margin-left: 20px;
+        }
+        .velocity {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+    <script>
+        let questions = [
+            { question: "A train is moving at {train} km/h. A person inside throws a ball forward at {ball} km/h relative to the train. What is the ball's velocity relative to the ground?", train: 60, ball: 20 },
+            { question: "A boat is crossing a river flowing at {river} km/h. The boat's speed relative to the water is {boat} km/h. What is the boat's velocity relative to the shore?", river: 10, boat: 15 },
+            { question: "Two cars are moving in opposite directions. One car is moving at {car1} km/h, and the other at {car2} km/h. What is their relative velocity?", car1: 80, car2: 50 },
+            { question: "A cyclist is traveling at {cyclist} km/h. A bus overtakes the cyclist at {bus} km/h. What is the bus's velocity relative to the cyclist?", cyclist: 25, bus: 40 },
+            { question: "An airplane flies at {airplane} km/h with a wind blowing at {wind} km/h from the west. What is the airplane's ground velocity?", airplane: 500, wind: 100 }
+        ];
+
+        function randomizeVelocities() {
+            questions.forEach(q => {
+                for (let key in q) {
+                    if (typeof q[key] === 'number') {
+                        q[key] = Math.floor(Math.random() * 100) + 10;
+                    }
+                }
+            });
+        }
+
+        let currentQuestionIndex = 0;
+
+        function loadQuestion() {
+            const questionElement = document.getElementById("question");
+            const trainElement = document.getElementById("train");
+            const ballElement = document.getElementById("ball");
+
+            const current = questions[currentQuestionIndex];
+            questionElement.textContent = current.question
+                .replace("{train}", current.train)
+                .replace("{ball}", current.ball)
+                .replace("{river}", current.river)
+                .replace("{boat}", current.boat)
+                .replace("{car1}", current.car1)
+                .replace("{car2}", current.car2)
+                .replace("{cyclist}", current.cyclist)
+                .replace("{bus}", current.bus)
+                .replace("{airplane}", current.airplane)
+                .replace("{wind}", current.wind);
+
+            if (current.train && current.ball) {
+                trainElement.style.display = "inline-block";
+                ballElement.style.display = "inline-block";
+                trainElement.querySelector(".velocity").textContent = `Velocity: ${current.train} km/h`;
+                ballElement.querySelector(".velocity").textContent = `Velocity: ${current.ball} km/h`;
+            } else {
+                trainElement.style.display = "none";
+                ballElement.style.display = "none";
+            }
+        }
+
+        function validateAnswer() {
+            const answerInput = document.getElementById("answer").value.trim();
+            const resultElement = document.getElementById("result");
+            if (answerInput === "") {
+                resultElement.textContent = "Please enter an answer before validating.";
+                resultElement.style.color = "red";
+            } else {
+                resultElement.textContent = "Answer recorded! Try the next question.";
+                resultElement.style.color = "green";
+                nextQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            const answerInput = document.getElementById("answer");
+            answerInput.value = "";
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = "";
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                const container = document.querySelector(".container");
+                container.innerHTML = `<h1>Great job!</h1><p>You have completed all the questions.</p>`;
+            }
+        }
+
+        window.onload = function () {
+            randomizeVelocities();
+            loadQuestion();
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Frame of Reference Homework</h1>
+        <div class="question">
+            <p id="question"></p>
+            <div class="diagram">
+                <div id="train" class="object train">
+                    Train
+                    <div class="velocity"></div>
+                </div>
+                <div id="ball" class="object ball">
+                    Ball
+                    <div class="velocity"></div>
+                </div>
+            </div>
+            <input type="text" id="answer" placeholder="Type your answer here...">
+        </div>
+        <button onclick="validateAnswer()">Validate</button>
+        <div id="result"></div>
+    </div>
+</body>
+</html>
